@@ -50,14 +50,15 @@
             text-align: center;
             z-index: 10;
             position: relative;
-            padding: 15px;
+            padding: 10px;
         }
 
         .scene {
             display: none;
             opacity: 0;
-            transition: opacity 1.2s ease-in-out;
+            transition: opacity 1.5s ease-in-out;
             width: 100%;
+            max-height: 95vh;
         }
 
         .scene.active {
@@ -65,46 +66,88 @@
             opacity: 1;
         }
 
-        /* Scaled Down Typography */
+        /* --- MAXIMIZED TYPOGRAPHY --- */
         h1 { 
             font-family: 'Playfair Display', serif; 
-            font-size: clamp(3rem, 12vw, 5rem); 
+            font-size: clamp(5rem, 25vw, 8rem); 
             margin: 0; 
             font-weight: 900; 
+            line-height: 1;
         }
         h2 { 
-            font-size: clamp(1.2rem, 5vw, 1.8rem); 
+            font-size: clamp(1.8rem, 7vw, 2.4rem); 
             letter-spacing: 1px; 
             text-transform: uppercase; 
-            margin: 5px 0;
+            margin: 8px 0;
+            line-height: 1.1;
         }
+        
+        /* Main body text scaling */
         p { 
-            font-size: clamp(0.9rem, 3.8vw, 1.1rem); 
-            line-height: 1.3; 
-            margin: 3px 0; 
+            font-size: clamp(1.1rem, 4.2vw, 1.3rem); 
+            line-height: 1.2; 
+            margin: 2px 0; 
         }
+
+        /* Hero Names */
         .names { 
-            font-size: clamp(1.6rem, 7vw, 2.5rem); 
+            font-size: clamp(2rem, 8.5vw, 3rem); 
             font-family: 'Playfair Display', serif; 
             font-weight: 900; 
             color: var(--vermillion); 
-            margin: 5px 0;
+            margin: 6px 0;
+            line-height: 1;
         }
+
+        /* Sub-details (Parents/Grandparents) */
+        .details {
+            font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+            opacity: 0.9;
+            margin: 1px 0;
+        }
+
         .ampersand { 
             font-family: 'Playfair Display', serif; 
-            font-size: 1.5rem; 
+            font-size: clamp(1.8rem, 7vw, 2.5rem); 
             color: var(--gold); 
             margin: 2px 0;
+            line-height: 1;
         }
         
         .floral-divider {
-            width: 40%;
+            width: 50%;
             max-width: 200px;
-            height: 20px;
+            height: 25px;
             margin: 10px auto;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10 Q 25 0, 50 10 T 100 10" fill="none" stroke="%23D4AF37" stroke-width="2"/></svg>');
             background-repeat: no-repeat;
             background-position: center;
+        }
+
+        /* Date Section */
+        .date-box { 
+            border-top: 3px solid var(--gold); 
+            border-bottom: 3px solid var(--gold); 
+            padding: 10px 0; 
+            margin: 10px auto; 
+            width: 85%;
+        }
+        .big-date { font-size: clamp(4rem, 18vw, 6rem); font-weight: 900; display: block; line-height: 0.9; }
+        .big-month { font-size: clamp(2rem, 8vw, 2.8rem); font-weight: 900; display: block; color: var(--gold); }
+        .small-sunday { font-size: 1.1rem; letter-spacing: 4px; display: block; }
+
+        /* RSVP Grid */
+        .rsvp-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 10px;
+            margin-top: 10px;
+            padding: 0 10px;
+        }
+        .rsvp-list p {
+            font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+            margin: 0;
+            text-align: center;
         }
 
         #start-overlay {
@@ -118,49 +161,15 @@
             align-items: center;
         }
         #start-button {
-            padding: 12px 25px;
-            border: 2px solid var(--vermillion);
+            padding: 15px 35px;
+            border: 3px solid var(--vermillion);
             background: transparent;
             color: var(--vermillion);
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: 900;
             letter-spacing: 2px;
             cursor: pointer;
         }
-
-        /* Compact Date Section */
-        .date-box { 
-            border-top: 2px solid var(--gold); 
-            border-bottom: 2px solid var(--gold); 
-            padding: 10px 0; 
-            margin: 10px auto; 
-            display: inline-block;
-            width: 80%;
-        }
-        .big-date { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 900; display: block; line-height: 1; }
-        .big-month { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 900; display: block; color: var(--gold); }
-        .small-sunday { font-size: 0.9rem; letter-spacing: 3px; display: block; }
-
-        /* RSVP Optimization */
-        .rsvp-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Two columns to save vertical space */
-            gap: 5px;
-            max-width: 300px;
-            margin: 10px auto;
-        }
-        .rsvp-list p {
-            font-size: 0.8rem;
-            margin: 0;
-            text-align: center;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-        }
-        .animate-float { animation: float 3s ease-in-out infinite; }
     </style>
 </head>
 <body>
@@ -170,7 +179,7 @@
 
     <div id="start-overlay" onclick="startInvitation()">
         <div class="floral-divider"></div>
-        <p style="letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">SNIGDHA & SRIJAN</p>
+        <p style="letter-spacing: 3px; font-size: 1.4rem;">SNIGDHA & SRIJAN</p>
         <button id="start-button">OPEN INVITATION</button>
         <div class="floral-divider"></div>
     </div>
@@ -187,41 +196,41 @@
             <h2>श्री गणेशाय नमः</h2>
         </div>
 
-        <!-- Scene 2: Introduction -->
+        <!-- Scene 2: Introduction (All Text Restored) -->
         <div class="scene" id="scene2">
-            <p style="letter-spacing: 1px; font-size: 0.8rem;">TOGETHER WITH THEIR FAMILIES</p>
+            <p style="letter-spacing: 1px; font-size: 0.9rem;">TOGETHER WITH THEIR FAMILIES</p>
             <div class="names">SNIGDHA GAUTAM</div>
-            <p>d/o Sandhya & Rajeev Gautam</p>
-            <p style="font-size: 0.8rem; opacity: 0.8;">Grand d/o Smt. Santosh & Late JP Gautam</p>
+            <p class="details">d/o Sandhya & Rajeev Gautam</p>
+            <p class="details">Grand d/o Smt. Santosh & Late JP Gautam</p>
             
             <div class="ampersand">&</div>
             
             <div class="names">SRIJAN SHARMA</div>
-            <p>s/o Kalpana & Rakesh Sharma</p>
-            <p style="font-size: 0.8rem; opacity: 0.8;">Grand s/o Late Vimla Devi & P. P. Sharma</p>
+            <p class="details">s/o Kalpana & Rakesh Sharma</p>
+            <p class="details">Grand s/o Late Vimla Devi & Purshottam Prasad Sharma</p>
             
             <div class="floral-divider"></div>
-            <p style="font-size: 0.9rem;">cordially invite you to join</p>
+            <p style="font-size: 1.1rem;">cordially invite you to join</p>
         </div>
 
         <!-- Scene 3: Date & Venue -->
         <div class="scene" id="scene3">
-            <p>their wedding function on</p>
+            <p style="font-size: 1.2rem;">their wedding function on</p>
             <div class="date-box">
                 <span class="small-sunday">SUNDAY</span>
                 <span class="big-date">22nd</span>
                 <span class="big-month">FEBRUARY</span>
-                <p style="font-size: 1.1rem; margin-top: 5px; border-top: 1px solid var(--gold); display: inline-block; padding-top: 3px;">AT 7:30 PM | 2026</p>
+                <p style="font-size: 1.3rem; margin-top: 8px; border-top: 2px solid var(--gold); display: inline-block; padding-top: 4px;">AT 7:30 PM | 2026</p>
             </div>
             <p>at</p>
-            <h2 style="color: var(--gold); line-height: 1.1; font-size: 1.2rem;">GRAND MERCURE, <br>CRYSTAL SAROVAR PREMIERE, AGRA</h2>
+            <h2 style="color: var(--gold); margin-top: 5px;">GRAND MERCURE, <br>CRYSTAL SAROVAR, AGRA</h2>
         </div>
 
-        <!-- Scene 4: Closing & RSVP -->
+        <!-- Scene 4: Closing & RSVP (All Names Kept) -->
         <div class="scene" id="scene5">
-            <h2 class="animate-float" style="font-size: 1.3rem;">Excited to have you with us</h2>
+            <h2 style="font-size: 1.6rem;">Excited to have you with us</h2>
             <div class="floral-divider"></div>
-            <p style="color: var(--gold); letter-spacing: 3px; font-size: 1.3rem; margin-bottom: 5px;">RSVP</p>
+            <p style="color: var(--gold); letter-spacing: 4px; font-size: 1.6rem;">RSVP</p>
             <div class="rsvp-list">
                 <p>SANTOSH GAUTAM</p>
                 <p>DHEERAJ GAUTAM</p>
@@ -241,9 +250,11 @@
 
         function startInvitation() {
             document.getElementById('start-overlay').style.display = 'none';
-            audio.play().catch(e => console.log("Audio play wait"));
+            audio.play().catch(e => console.log("Audio waiting"));
             showScene(0);
-            const timings = [3000, 6000, 6000, 7000];
+            
+            const timings = [3500, 8000, 7500, 8500];
+            
             function next() {
                 if (currentScene < scenes.length - 1) {
                     currentScene++;
@@ -271,11 +282,11 @@
             init() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height + canvas.height;
-                this.size = Math.random() * 1.5 + 0.5;
+                this.size = Math.random() * 2 + 1;
                 this.speed = Math.random() * 0.4 + 0.2;
                 this.op = Math.random() * 0.5 + 0.2;
             }
-            up() { this.y -= this.speed; if (this.y < -10) this.init(); }
+            up() { this.y -= this.speed; if (this.y < -20) this.init(); }
             dr() {
                 ctx.fillStyle = `rgba(212, 175, 55, ${this.op})`;
                 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
