@@ -23,14 +23,14 @@
             color: var(--vermillion);
             font-family: 'Cormorant Garamond', serif;
             font-weight: 700; 
-            overflow: hidden; /* Keeps the app-like feel */
+            overflow: hidden;
         }
 
         .background-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
-            opacity: 0.4;
+            opacity: 0.3;
             pointer-events: none;
             z-index: 1;
         }
@@ -50,15 +50,14 @@
             text-align: center;
             z-index: 10;
             position: relative;
-            padding: 20px;
+            padding: 15px;
         }
 
         .scene {
             display: none;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.2s ease-in-out;
             width: 100%;
-            max-width: 600px;
         }
 
         .scene.active {
@@ -66,48 +65,43 @@
             opacity: 1;
         }
 
-        /* Responsive Typography */
+        /* Scaled Down Typography */
         h1 { 
             font-family: 'Playfair Display', serif; 
-            font-size: clamp(4rem, 15vw, 8rem); 
+            font-size: clamp(3rem, 12vw, 5rem); 
             margin: 0; 
             font-weight: 900; 
-            line-height: 1;
         }
         h2 { 
-            font-size: clamp(1.5rem, 6vw, 2.5rem); 
-            letter-spacing: 2px; 
+            font-size: clamp(1.2rem, 5vw, 1.8rem); 
+            letter-spacing: 1px; 
             text-transform: uppercase; 
-            margin: 10px 0;
-            font-weight: 700;
+            margin: 5px 0;
         }
         p { 
-            font-size: clamp(1rem, 4vw, 1.4rem); 
-            line-height: 1.4; 
-            margin: 5px 0; 
-            font-weight: 700; 
+            font-size: clamp(0.9rem, 3.8vw, 1.1rem); 
+            line-height: 1.3; 
+            margin: 3px 0; 
         }
         .names { 
-            font-size: clamp(2rem, 8vw, 3.5rem); 
+            font-size: clamp(1.6rem, 7vw, 2.5rem); 
             font-family: 'Playfair Display', serif; 
             font-weight: 900; 
             color: var(--vermillion); 
-            margin: 10px 0;
-            line-height: 1.1;
+            margin: 5px 0;
         }
         .ampersand { 
             font-family: 'Playfair Display', serif; 
-            font-size: clamp(1.5rem, 6vw, 3rem); 
+            font-size: 1.5rem; 
             color: var(--gold); 
-            margin: 5px 0; 
-            font-weight: 900;
+            margin: 2px 0;
         }
         
         .floral-divider {
-            width: 60%;
-            max-width: 300px;
-            height: 30px;
-            margin: 15px auto;
+            width: 40%;
+            max-width: 200px;
+            height: 20px;
+            margin: 10px auto;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10 Q 25 0, 50 10 T 100 10" fill="none" stroke="%23D4AF37" stroke-width="2"/></svg>');
             background-repeat: no-repeat;
             background-position: center;
@@ -122,45 +116,51 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            padding: 20px;
-            text-align: center;
         }
         #start-button {
-            padding: 15px 30px;
-            border: 3px solid var(--vermillion);
+            padding: 12px 25px;
+            border: 2px solid var(--vermillion);
             background: transparent;
             color: var(--vermillion);
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 900;
-            letter-spacing: 3px;
-            transition: 0.3s;
+            letter-spacing: 2px;
             cursor: pointer;
         }
 
-        /* Date Section Fixes */
+        /* Compact Date Section */
         .date-box { 
-            border-top: 3px solid var(--gold); 
-            border-bottom: 3px solid var(--gold); 
-            padding: 15px 0; 
-            margin: 15px 0; 
+            border-top: 2px solid var(--gold); 
+            border-bottom: 2px solid var(--gold); 
+            padding: 10px 0; 
+            margin: 10px auto; 
+            display: inline-block;
+            width: 80%;
         }
-        .big-date { font-size: clamp(3.5rem, 15vw, 6.5rem); font-weight: 900; display: block; line-height: 1; }
-        .big-month { font-size: clamp(1.8rem, 8vw, 3.5rem); font-weight: 900; display: block; color: var(--gold); }
-        .small-sunday { font-size: 1.2rem; letter-spacing: 4px; display: block; margin-bottom: 5px; }
+        .big-date { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 900; display: block; line-height: 1; }
+        .big-month { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 900; display: block; color: var(--gold); }
+        .small-sunday { font-size: 0.9rem; letter-spacing: 3px; display: block; }
 
-        /* RSVP List Optimization */
+        /* RSVP Optimization */
+        .rsvp-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns to save vertical space */
+            gap: 5px;
+            max-width: 300px;
+            margin: 10px auto;
+        }
         .rsvp-list p {
-            font-size: clamp(0.9rem, 3.5vw, 1.3rem);
-            margin: 2px 0;
+            font-size: 0.8rem;
+            margin: 0;
+            text-align: center;
         }
 
         @keyframes float {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-5px); }
             100% { transform: translateY(0); }
         }
-        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
     </style>
 </head>
 <body>
@@ -170,7 +170,7 @@
 
     <div id="start-overlay" onclick="startInvitation()">
         <div class="floral-divider"></div>
-        <p style="letter-spacing: 3px; margin-bottom: 20px;">SNIGDHA & SRIJAN</p>
+        <p style="letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">SNIGDHA & SRIJAN</p>
         <button id="start-button">OPEN INVITATION</button>
         <div class="floral-divider"></div>
     </div>
@@ -189,19 +189,19 @@
 
         <!-- Scene 2: Introduction -->
         <div class="scene" id="scene2">
-            <p style="letter-spacing: 2px;">TOGETHER WITH THEIR FAMILIES</p>
+            <p style="letter-spacing: 1px; font-size: 0.8rem;">TOGETHER WITH THEIR FAMILIES</p>
             <div class="names">SNIGDHA GAUTAM</div>
             <p>d/o Sandhya & Rajeev Gautam</p>
-            <p>Grand d/o Smt. Santosh & Late JP Gautam</p>
+            <p style="font-size: 0.8rem; opacity: 0.8;">Grand d/o Smt. Santosh & Late JP Gautam</p>
             
             <div class="ampersand">&</div>
             
             <div class="names">SRIJAN SHARMA</div>
             <p>s/o Kalpana & Rakesh Sharma</p>
-            <p>Grand s/o Late Vimla Devi & Purshottam Prasad Sharma</p>
+            <p style="font-size: 0.8rem; opacity: 0.8;">Grand s/o Late Vimla Devi & P. P. Sharma</p>
             
             <div class="floral-divider"></div>
-            <p>cordially invite you to join</p>
+            <p style="font-size: 0.9rem;">cordially invite you to join</p>
         </div>
 
         <!-- Scene 3: Date & Venue -->
@@ -211,17 +211,17 @@
                 <span class="small-sunday">SUNDAY</span>
                 <span class="big-date">22nd</span>
                 <span class="big-month">FEBRUARY</span>
-                <p style="font-size: 1.5rem; margin-top: 10px; border-top: 1px solid var(--gold); display: inline-block; padding-top: 5px;">AT 7:30 PM | 2026</p>
+                <p style="font-size: 1.1rem; margin-top: 5px; border-top: 1px solid var(--gold); display: inline-block; padding-top: 3px;">AT 7:30 PM | 2026</p>
             </div>
             <p>at</p>
-            <h2 style="color: var(--gold); line-height: 1.2;">GRAND MERCURE, <br>CRYSTAL SAROVAR PREMIERE, AGRA</h2>
+            <h2 style="color: var(--gold); line-height: 1.1; font-size: 1.2rem;">GRAND MERCURE, <br>CRYSTAL SAROVAR PREMIERE, AGRA</h2>
         </div>
 
-        <!-- Scene 5: Closing & RSVP -->
+        <!-- Scene 4: Closing & RSVP -->
         <div class="scene" id="scene5">
-            <h2 class="animate-float">Excited to have you with us</h2>
+            <h2 class="animate-float" style="font-size: 1.3rem;">Excited to have you with us</h2>
             <div class="floral-divider"></div>
-            <p style="color: var(--gold); letter-spacing: 4px; font-size: 1.8rem; margin-bottom: 10px;">RSVP</p>
+            <p style="color: var(--gold); letter-spacing: 3px; font-size: 1.3rem; margin-bottom: 5px;">RSVP</p>
             <div class="rsvp-list">
                 <p>SANTOSH GAUTAM</p>
                 <p>DHEERAJ GAUTAM</p>
@@ -241,85 +241,53 @@
 
         function startInvitation() {
             document.getElementById('start-overlay').style.display = 'none';
-            // Try to play audio (some browsers block this until interaction)
-            audio.play().catch(e => console.log("Audio play blocked until interaction"));
-            
+            audio.play().catch(e => console.log("Audio play wait"));
             showScene(0);
-            
-            // Timing for each scene in milliseconds
-            const timings = [4000, 7000, 7000, 8000];
-            
+            const timings = [3000, 6000, 6000, 7000];
             function next() {
                 if (currentScene < scenes.length - 1) {
                     currentScene++;
                     showScene(currentScene);
-                    setTimeout(next, timings[currentScene] || 5000);
+                    setTimeout(next, timings[currentScene]);
                 }
             }
             setTimeout(next, timings[0]);
         }
 
         function showScene(index) {
-            scenes.forEach(scene => {
-                scene.classList.remove('active');
-                scene.style.display = 'none';
-            });
-            
-            const activeScene = scenes[index];
-            activeScene.style.display = 'block';
-            setTimeout(() => {
-                activeScene.classList.add('active');
-            }, 50);
+            scenes.forEach(s => { s.classList.remove('active'); s.style.display = 'none'; });
+            scenes[index].style.display = 'block';
+            setTimeout(() => scenes[index].classList.add('active'), 50);
         }
 
-        // Particle System
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        function res() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', res); res();
 
         let particles = [];
-        class Particle {
-            constructor() {
-                this.init();
-            }
+        class P {
+            constructor() { this.init(); }
             init() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height + canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedY = Math.random() * 0.5 + 0.3;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speed = Math.random() * 0.4 + 0.2;
+                this.op = Math.random() * 0.5 + 0.2;
             }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < -10) this.init();
-            }
-            draw() {
-                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+            up() { this.y -= this.speed; if (this.y < -10) this.init(); }
+            dr() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.op})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
-        for (let i = 0; i < 60; i++) { // Reduced count for mobile performance
-            particles.push(new Particle());
-        }
-
-        function animateParticles() {
+        for (let i = 0; i < 40; i++) particles.push(new P());
+        function anim() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
+            particles.forEach(p => { p.up(); p.dr(); });
+            requestAnimationFrame(anim);
         }
-        animateParticles();
+        anim();
     </script>
 </body>
 </html>
