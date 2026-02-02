@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snigdha & Srijan - Wedding Invitation</title>
+    <!-- Font Weights 700 and 900 for maximum boldness -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --beige: #F5E6D3; /* Sandalwood Beige */
+            --vermillion: #9B1B30; /* Vermillion Red */
+            --gold: #D4AF37;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--beige);
+            color: var(--vermillion);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700; 
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2;
+        }
+
+        #video-container {
+            width: 95%;
+            max-width: 900px;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .scene {
+            display: none;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            padding: 20px;
+        }
+
+        .scene.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Typography - Large & Bold */
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 5rem; 
+            margin: 0; 
+            font-weight: 900; 
+            line-height: 1;
+        }
+        h2 { 
+            font-size: 2.5rem; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            margin-top: 0; 
+            font-weight: 700;
+        }
+        p { 
+            font-size: 1.6rem; 
+            line-height: 1.4; 
+            margin: 8px 0; 
+            font-weight: 700; 
+        }
+        .names { 
+            font-size: 3.5rem; 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 900; 
+            color: var(--vermillion); 
+            margin: 15px 0;
+        }
+        .ampersand { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 3rem; 
+            color: var(--gold); 
+            margin: 10px 0; 
+            font-weight: 900;
+        }
+        
+        .floral-divider {
+            width: 300px;
+            height: 40px;
+            margin: 25px auto;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10 Q 25 0, 50 10 T 100 10" fill="none" stroke="%23D4AF37" stroke-width="2"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        #start-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--beige);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        #start-button {
+            padding: 20px 50px;
+            border: 4px solid var(--vermillion);
+            background: transparent;
+            color: var(--vermillion);
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        #start-button:hover { background: var(--vermillion); color: var(--beige); }
+
+        .ceremony-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .full-width { grid-column: span 2; margin-top: 20px; }
+
+        .date-box { 
+            border-top: 4px solid var(--gold); 
+            border-bottom: 4px solid var(--gold); 
+            padding: 25px 0; 
+            margin: 25px 0; 
+        }
+
+        /* Specific styles for the requested date change */
+        .big-date { font-size: 6.5rem; font-weight: 900; display: block; line-height: 1; }
+        .big-month { font-size: 3.5rem; font-weight: 900; display: block; margin-bottom: 10px; color: var(--gold); }
+        .small-sunday { font-size: 1.8rem; letter-spacing: 6px; display: block; margin-bottom: 10px; }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+    </style>
+</head>
+<body>
+
+    <div class="background-overlay"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <div id="start-overlay" onclick="startInvitation()">
+        <div class="floral-divider"></div>
+        <p style="font-size: 2.2rem; letter-spacing: 5px;">SNIGDHA & SRIJAN</p>
+        <button id="start-button">OPEN INVITATION</button>
+        <div class="floral-divider"></div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="video-container">
+        
+        <!-- Scene 1: Invocation -->
+        <div class="scene" id="scene1">
+            <h1 style="font-size: 8rem;">ॐ</h1>
+            <h2 style="font-size: 3.5rem;">श्री गणेशाय नमः</h2>
+        </div>
+
+        <!-- Scene 2: Introduction -->
+        <div class="scene" id="scene2">
+            <p style="letter-spacing: 3px; font-size: 1.8rem;">TOGETHER WITH THEIR FAMILIES</p>
+            <div class="names">SNIGDHA GAUTAM</div>
+            <p>d/o Sandhya & Rajeev Gautam</p>
+            <p>Grand d/o Smt. Santosh & Late JP Gautam</p>
+            
+            <div class="ampersand">&</div>
+            
+            <div class="names">SRIJAN SHARMA</div>
+            <p>s/o Kalpana & Rakesh Sharma</p>
+            <p>Grand s/o Late Vimla Devi & Purshottam Prasad Sharma</p>
+            
+            <div class="floral-divider"></div>
+            <p style="font-size: 1.8rem;">cordially invite you to join</p>
+        </div>
+
+        <!-- Scene 3: Date & Venue -->
+        <div class="scene" id="scene3">
+          <h2 class="" style="font-size: 3rem;"><br>their wedding function on</h2>
+            <div class="date-box">
+                <span class="big-date">22nd</span>
+                <span class="big-month">FEBRUARY</span>
+                <span class="small-sunday">SUNDAY</span>
+                <p style="font-size: 2.2rem; margin-top: 15px; border-top: 1px solid var(--gold); display: inline-block; padding-top: 10px;">AT 7:30 PM | 2026</p>
+            </div>
+            <p>at</p>
+            <h2 style="color: var(--gold); font-size: 2.2rem; line-height: 1.3;">GRAND MERCURE, <br>CRYSTAL SAROVAR PREMIERE, AGRA</h2>
+        </div>
+
+     
+
+        <!-- Scene 5: Closing & RSVP -->
+        <div class="scene" id="scene5">
+            <h2 class="animate-float" style="font-size: 3rem;">Excited to have you with us as we celebrate this special occasion</h2>
+            <div class="floral-divider"></div>
+            <p style="color: var(--gold); letter-spacing: 5px; font-size: 2.2rem;">RSVP</p>
+            <p style="font-size: 1.5rem;">SANTOSH GAUTAM</p>
+			       <p style="font-size: 1.5rem;">DHEERAJ GAUTAM</p>
+				   		 <p style="font-size: 1.5rem;">POONAM GAUTAM</p>
+            <p style="font-size: 1.5rem;">ANANYA GAUTAM</p>
+			
+	
+            <p style="font-size: 1.5rem;">SHARAV GAUTAM</p>
+			<p style="font-size: 1.5rem;">SHAIVYA GAUTAM</p>
+        </div>
+
+    </div>
+
+    <script>
+        const scenes = document.querySelectorAll('.scene');
+        const audio = document.getElementById('bg-music');
+        let currentScene = 0;
+
+        function startInvitation() {
+            document.getElementById('start-overlay').style.display = 'none';
+            audio.play();
+            showScene(0);
+            
+            const timings = [5000, 8000, 7000, 8000, 10000];
+            
+            function next() {
+                if (currentScene < scenes.length - 1) {
+                    currentScene++;
+                    showScene(currentScene);
+                    setTimeout(next, timings[currentScene]);
+                }
+            }
+            setTimeout(next, timings[0]);
+        }
+
+        function showScene(index) {
+            scenes.forEach(scene => scene.classList.remove('active'));
+            setTimeout(() => {
+                scenes[index].classList.add('active');
+            }, 100);
+        }
+
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
